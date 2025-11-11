@@ -6,6 +6,7 @@ import 'package:quizz_game/view/presentation/widget/question_screen_header.dart'
 import 'package:quizz_game/view/presentation/widget/submession_button.dart';
 import 'package:quizz_game/view/presentation/widget/suggestion_box.dart';
 
+// ignore: must_be_immutable
 class QuestionScreen extends StatefulWidget {
   QuestionScreen({super.key, required this.quizz});
   Quizz quizz;
@@ -27,13 +28,14 @@ class _QuestionScreenState extends State<QuestionScreen> {
             timer.cancel();
             if (widget.quizz.getEnd) {
               widget.quizz.setIncrementWrong = 1;
-
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Result(
-                          correct: widget.quizz.getCorrectAnswers,
-                          wrong: widget.quizz.getWrongAnswers)));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Result(
+                      correct: widget.quizz.getCorrectAnswers,
+                      wrong: widget.quizz.getWrongAnswers),
+                ),
+              );
             } else {
               widget.quizz.setIncrementWrong = 1;
               resetTimer();
@@ -121,35 +123,38 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 }),
               ),
               GestureDetector(
-                  onTap: () {
-                    if (current != 5 && !widget.quizz.getEnd) {
-                      setState(() {
-                        _timer!.cancel();
+                onTap: () {
+                  if (current != 5 && !widget.quizz.getEnd) {
+                    setState(() {
+                      _timer!.cancel();
 
-                        widget.quizz.validationAnswer(
-                            suggestions[current], widget.quizz.getCurrentIndex);
-                        current = 5;
-                        resetTimer();
-                      });
-                    } else if (current != 5 && widget.quizz.getEnd) {
-                      setState(() {
-                        widget.quizz.validationAnswer(
-                            suggestions[current], widget.quizz.getCurrentIndex);
-                        current = 5;
-                        _timer!.cancel();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Result(
-                                    correct: widget.quizz.getCorrectAnswers,
-                                    wrong: widget.quizz.getWrongAnswers)));
-                      });
-                    }
-                  },
-                  child: SubmessionButton(
-                    title: widget.quizz.getEnd ? "Submit" : "Next",
-                    backColor: Colors.purple,
-                  ))
+                      widget.quizz.validationAnswer(
+                          suggestions[current], widget.quizz.getCurrentIndex);
+                      current = 5;
+                      resetTimer();
+                    });
+                  } else if (current != 5 && widget.quizz.getEnd) {
+                    setState(() {
+                      widget.quizz.validationAnswer(
+                          suggestions[current], widget.quizz.getCurrentIndex);
+                      current = 5;
+                      _timer!.cancel();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Result(
+                              correct: widget.quizz.getCorrectAnswers,
+                              wrong: widget.quizz.getWrongAnswers),
+                        ),
+                      );
+                    });
+                  }
+                },
+                child: SubmessionButton(
+                  title: widget.quizz.getEnd ? "Submit" : "Next",
+                  backColor: Colors.purple,
+                ),
+              )
             ],
           ),
         ),

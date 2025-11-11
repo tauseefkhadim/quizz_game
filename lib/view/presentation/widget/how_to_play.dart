@@ -4,11 +4,11 @@ import 'package:quizz_game/constants/styles.dart';
 // ignore: must_be_immutable
 class HowToPlay extends StatelessWidget {
   HowToPlay({
-    required  this.title,
+    required this.title,
     super.key,
   });
 
-   String title;
+  String title;
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +19,9 @@ class HowToPlay extends StatelessWidget {
         height: 70,
         width: 250,
         decoration: BoxDecoration(
-          color: Colors.indigo,
-          borderRadius: BorderRadius.circular(20)
-        ),
+            color: Colors.indigo, borderRadius: BorderRadius.circular(20)),
         child: Center(
-          child: Text(
-            title,
-            style: mainTitle
-          ),
+          child: Text(title, style: mainTitle),
         ),
       ),
     );
